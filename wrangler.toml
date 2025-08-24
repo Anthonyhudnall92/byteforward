@@ -1,0 +1,94 @@
+# Wrangler Configuration for ByteForward Website
+name = "byteforward"
+compatibility_date = "2024-01-01"
+account_id = ""  # Add your Cloudflare account ID here
+
+# Pages configuration
+[env.production]
+name = "byteforward"
+routes = [
+  { pattern = "byteforward.com/*", zone_name = "byteforward.com" }
+]
+
+[env.staging]
+name = "byteforward-staging"
+routes = [
+  { pattern = "staging.byteforward.com/*", zone_name = "byteforward.com" }
+]
+
+# Build configuration
+[build]
+command = "npm run build"
+cwd = "."
+watch_dir = "assets"
+
+[build.upload]
+format = "modules"
+dir = "./dist"
+main = "./index.html"
+
+# Environment variables (set these in Cloudflare dashboard or via secrets)
+[vars]
+ENVIRONMENT = "production"
+SITE_URL = "https://byteforward.com"
+
+# Custom headers for security
+[[headers]]
+for = "/*"
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+X-XSS-Protection = "1; mode=block"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';"
+
+# Cache control for static assets
+[[headers]]
+for = "/assets/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.css"
+[headers.values]
+Cache-Control = "public, max-age=31536000"
+Content-Type = "text/css; charset=utf-8"
+
+[[headers]]
+for = "*.js"
+[headers.values]
+Cache-Control = "public, max-age=31536000"
+Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+for = "*.html"
+[headers.values]
+Cache-Control = "public, max-age=3600"
+Content-Type = "text/html; charset=utf-8"
+
+# Redirect configuration
+[[redirects]]
+from = "/www/*"
+to = "/:splat"
+status = 301
+
+[[redirects]]
+from = "http://byteforward.com/*"
+to = "https://byteforward.com/:splat"
+status = 301
+force = true
+
+# 404 page
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+# Analytics and monitoring
+[analytics]
+enabled = true
+
+[logpush]
+enabled = false
