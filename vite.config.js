@@ -3,6 +3,7 @@ import legacy from '@vitejs/plugin-legacy'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
+  base: process.env.NODE_ENV === 'production' ? '/byteforward/' : '/',
   plugins: [
     legacy({
       targets: ['defaults', 'not IE 11']
