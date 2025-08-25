@@ -221,7 +221,11 @@
                         </div>
                     </div>
                 </div>
-                <form class="contact-form">
+                <form class="contact-form" name="contact" method="POST" data-netlify="true" action="/thank-you" netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="contact" />
+                    <div class="form-group" style="display: none;">
+                        <input name="bot-field" />
+                    </div>
                     <div class="form-group">
                         <input type="text" name="name" placeholder="Your Name" required>
                     </div>

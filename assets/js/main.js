@@ -74,9 +74,28 @@ function initContactForm() {
   const contactForm = document.querySelector('.contact-form')
 
   if (contactForm) {
+    // For Netlify Forms, we don't prevent default submission
+    // Just add client-side validation before submission
     contactForm.addEventListener('submit', function(e) {
-      e.preventDefault()
-      handleFormSubmission(this)
+      const inputs = this.querySelectorAll('input[required], textarea[required]')
+      let isFormValid = true
+
+      // Validate all required fields before submission
+      inputs.forEach(input => {
+        if (!validateField(input)) {
+          isFormValid = false
+        }
+      })
+
+      if (!isFormValid) {
+        e.preventDefault()
+        return false
+      }
+
+      // Show loading state for better UX
+      const submitButton = this.querySelector('button[type="submit"]')
+      submitButton.textContent = 'Sending...'
+      submitButton.disabled = true
     })
 
     // Add real-time validation
