@@ -74,8 +74,7 @@ function initContactForm() {
   const contactForm = document.querySelector('.contact-form')
 
   if (contactForm) {
-    // For Netlify Forms, we don't prevent default submission
-    // Just add client-side validation before submission
+    // For Formspree, we validate first then allow submission
     contactForm.addEventListener('submit', function(e) {
       const inputs = this.querySelectorAll('input[required], textarea[required]')
       let isFormValid = true
@@ -96,6 +95,9 @@ function initContactForm() {
       const submitButton = this.querySelector('button[type="submit"]')
       submitButton.textContent = 'Sending...'
       submitButton.disabled = true
+      
+      // Allow form to submit normally to Formspree
+      // Formspree will handle the redirect to thank-you page
     })
 
     // Add real-time validation

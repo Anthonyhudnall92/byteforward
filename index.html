@@ -8,7 +8,7 @@
     <meta name="keywords" content="cybersecurity, digital security, threat protection, penetration testing, security consulting">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self' https://cdn.jsdelivr.net;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
@@ -221,11 +221,10 @@
                         </div>
                     </div>
                 </div>
-                <form class="contact-form" name="contact" method="POST" data-netlify="true" action="/thank-you" netlify-honeypot="bot-field">
-                    <input type="hidden" name="form-name" value="contact" />
-                    <div class="form-group" style="display: none;">
-                        <input name="bot-field" />
-                    </div>
+                <form class="contact-form" method="POST" action="https://formspree.io/f/manywljk">
+                    <input type="hidden" name="_subject" value="New Contact Form Submission - ByteForward" />
+                    <input type="hidden" name="_next" value="https://byte-forward.com/thank-you.html" />
+                    <input type="hidden" name="_captcha" value="false" />
                     <div class="form-group">
                         <input type="text" name="name" placeholder="Your Name" required>
                     </div>
